@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTH2</title>
+    <style>
+      body {
+        background-color: #202020;
+        font-family:
+          "Open Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen-Sans,
+          Ubuntu,
+          Cantarell,
+          "Helvetica Neue",
+          Helvetica,
+          Arial,
+          sans-serif;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+
+    
+
+  </head>
+  <body>
+    <script>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      // JavaScript equivalent code with variables
+
+      function changeFaviconAtTheBeginning(faviconUrl) {
+        // Create a new favicon link element
+        const newFavicon = document.createElement("link");
+        newFavicon.rel = "icon";
+        newFavicon.href = faviconUrl;
+
+        // Get the current favicon element (if exists)
+        const existingFavicon = document.querySelector('link[rel="icon"]');
+
+        // Replace the current favicon with the new one
+        if (existingFavicon) {
+          // If a favicon exists, replace it
+          document.head.removeChild(existingFavicon); // Remove the existing favicon
+        }
+
+        // Append the new favicon to the head
+        document.head.appendChild(newFavicon);
+      }
+
+      // Call the function with the desired favicon URL
+      changeFaviconAtTheBeginning("https://i.ibb.co/Jpty1B8/305182938-1a0efe63-726e-49ca-a13c-d0ed627f2ea7.png");
+
+      
+      function showCustomMessageBox(options, title, text, value, timeout) {
+        return new Promise((resolve) => {
+          // Define default options for the message box
+          let defaultOptions = {
+            title: title || "", // Default title is empty
+            text: text || "Press OK to continue.", // Default text if not provided
+            showCancelButton: false, // Default is to not show Cancel button
+            showDenyButton: false, // Default is to not show Deny button
+            confirmButtonText: "OK", // Default text for OK button
+            focusConfirm: true, // Default focus on OK button
+          };
+
+          let numOriginal = value;
+
+          let num = numOriginal;
+
+          let done1 = 0;
+
+          let done2 = 0;
+
+          let done3 = 0;
+
+          let AIndex = 0;
+
+          for (AIndex = 1; AIndex <= 1; AIndex++) {
+            // this is about if you add always on top in a msgbox it will be removed in js cuz its kinda useless...
+            // becouse if you like adding always on top in ahk in js we dont realy do it so yeah
+            if (num >= 262144) {
+              num = num - 262144;
+              numOriginal = numOriginal - 262144;
+            }
+
+            if (num >= 256 && num < 500) {
+              num = num - 256;
+
+              done3 = 256;
+            }
+
+            if (num >= 512) {
+              num = num - 512;
+
+              done3 = 512;
+            }
+
+            if (num == 0) {
+              done1 = 0;
+
+              break;
+            }
+
+            if (num <= 6) {
+              done1 = num;
+
+              break;
+            }
+
+            if (num >= 64 && num < 64 * 2) {
+              done2 = 64;
+
+              if (num == 64) {
+                done1 = 0;
+
+                break;
+              } else {
+                done1 = num - 64;
+
+                break;
+              }
+            }
+
+            if (num >= 48 && num < 63) {
+              done2 = 48;
+
+              if (num == 48) {
+                done1 = 0;
+
+                break;
+              } else {
+                done1 = num - 48;
+
+                break;
+              }
+            }
+
+            if (num >= 32 && num < 47) {
+              done2 = 32;
+
+              if (num == 32) {
+                done1 = 0;
+
+                break;
+              } else {
+                done1 = num - 32;
+
+                break;
+              }
+            }
+
+            if (num >= 16 && num < 30) {
+              done2 = 16;
+
+              if (num == 16) {
+                done1 = 0;
+
+                break;
+              } else {
+                done1 = num - 16;
+
+                break;
+              }
+            }
+          }
+
+          let doneAdded = done1 + done2 + done3;
+
+          if (doneAdded !== numOriginal) {
+            // displayMessage("The calc was wrong!");
+          } else {
+            // displayMessage("num was: " + numOriginal + "\ndone1: " + done1 + "\ndone2: " + done2 + "\ndone3: " + done3);
+          }
+
+          // Parse the value to determine the options for the message box
+          if (done1 === 1) defaultOptions.showCancelButton = true; // OK/Cancel in ahk but here it will show Ok/Cancel wiat its same haha
+
+          // not gonna work if you can make it work i will appreciate
+          //   if (done1 === 2) {
+          //     defaultOptions.showCancelButton = true; // Abort/Retry/Ignore
+          //     defaultOptions.showDenyButton = true;
+          //   }
+          if (done1 === 3) {
+            defaultOptions.showCancelButton = true; // Yes/No/Cancel in ahk but here it will show Ok/No/Cancel
+            defaultOptions.showDenyButton = true;
+          }
+          if (done1 === 4) {
+            // defaultOptions.showCancelButton = true;
+            defaultOptions.showDenyButton = true; // Yes/No in ahk but here it will show Ok/No
+          }
+          if (done1 === 5) {
+            defaultOptions.showCancelButton = true; // Retry/Cancel in ahk but here it will show Ok/Cancel tip you can write in the Msgbox press ok to retry
+          }
+          // not gonna work if you can make it work i will appreciate
+          //   if (done1 === 6) {
+          //     defaultOptions.showCancelButton = true; // Cancel/Try Again/Continue
+          //     defaultOptions.showDenyButton = true;
+          //   }
+
+          if (done2 === 16) defaultOptions.icon = "error"; // Icon Hand (stop/error)
+          if (done2 === 32) defaultOptions.icon = "question"; // Icon Question
+          if (done2 === 48) defaultOptions.icon = "warning"; // Icon Exclamation
+          if (done2 === 64) defaultOptions.icon = "info"; // Icon Asterisk (info)
+
+          if (done3 === 256) defaultOptions.focusDeny = true; // Makes the 3rd button the default
+          if (done3 === 512) defaultOptions.focusCancel = true; // Makes the 2nd button the default
+
+          // Set timeout if provided
+          if (timeout) {
+            defaultOptions.timer = timeout * 1000; // Convert timeout to milliseconds
+          }
+
+          // Merge default options with provided options
+          Object.assign(defaultOptions, options);
+
+          // Display the message box with the constructed options
+          Swal.fire(defaultOptions).then((result) => {
+            if (result.isConfirmed) {
+              resolve("OK");
+            } else if (result.isDenied) {
+              resolve("No");
+            } else {
+              resolve("Cancel");
+            }
+          });
+        });
+      }
+
+
+      var lastKeyPressed = "";
+
+      function trackLastKeyPressed() {
+        document.addEventListener("keydown", function (event) {
+          lastKeyPressed = event.key;
+          // console.log(lastKeyPressed);
+        });
+      }
+
+      function getLastKeyPressed() {
+        return lastKeyPressed;
+      }
+
+      // Call the trackLastKeyPressed function to start tracking key presses
+      trackLastKeyPressed();
+
+      let lastInputTime = Date.now(); // Initialize with current timestamp
+      let startTimestamp = Date.now(); // Initialize with current timestamp
+
+      // Event listener to track user activity
+      function resetIdleTimer() {
+        lastInputTime = Date.now(); // Update last input time
+      }
+
+      document.addEventListener("mousemove", resetIdleTimer);
+      document.addEventListener("keypress", resetIdleTimer);
+
+      // Function to calculate time since last input event
+      function A_TimeIdle() {
+        return Date.now() - lastInputTime; // Calculate time difference
+      }
+
+      // Function to calculate tick count in milliseconds
+      function A_TickCount() {
+        return Date.now() - startTimestamp;
+      }
+
+      function BuildInVars(varName) {
+        switch (varName) {
+          case "A_ScreenWidth":
+            // Return screen width
+            return window.innerWidth;
+          case "A_LastKey":
+            // Return screen width
+            return getLastKeyPressed();
+          case "A_ScreenHeight":
+            // Return screen height
+            return window.innerHeight;
+          case "A_TimeIdle":
+            // Return time idle
+            return A_TimeIdle();
+          case "A_TickCount":
+            // Return tick count in milliseconds
+            return A_TickCount();
+          case "A_Now":
+            // Return current local timestamp
+            return new Date().toLocaleString();
+          case "A_YYYY":
+            // Return current year
+            return new Date().getFullYear();
+          case "A_MM":
+            // Return current month
+            return (new Date().getMonth() + 1).toString().padStart(2, "0");
+          case "A_DD":
+            // Return current day
+            return new Date().getDate().toString().padStart(2, "0");
+          case "A_MMMM":
+            // Return full month name
+            return new Date().toLocaleDateString(undefined, { month: "long" });
+          case "A_MMM":
+            // Return short month name
+            return new Date().toLocaleDateString(undefined, { month: "short" });
+          case "A_DDDD":
+            // Return full day name
+            return new Date().toLocaleDateString(undefined, { weekday: "long" });
+          case "A_DDD":
+            // Return short day name
+            return new Date().toLocaleDateString(undefined, { weekday: "short" });
+          case "A_Hour":
+            // Return current hour
+            return new Date().getHours().toString().padStart(2, "0");
+          case "A_Min":
+            // Return current minute
+            return new Date().getMinutes().toString().padStart(2, "0");
+          case "A_Sec":
+            // Return current second
+            return new Date().getSeconds().toString().padStart(2, "0");
+          case "A_Space":
+            // Return space character
+            return " ";
+          case "A_Tab":
+            // Return tab character
+            return "\t";
+
+          default:
+            // Handle unknown variable names
+            return null;
+        }
+      }
+
+
+      // Flooring
+      function Floor(num) {
+        if (num === null || isNaN(num)) return null;
+        return Math.floor(num);
+      }
+
+
+      // Function to generate a random number between min (inclusive) and max (inclusive)
+      function getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+
+
+      async function ParseInt(num) {
+        if (num === null) {
+          return null;
+        }
+
+        num = num.trim();
+        num++;
+        num--;
+
+        return num;
+      }
+
+// Function to trim specified number of characters from the left side of a string
+function StringTrimLeft(input, numChars) {
+  if (typeof input === 'string' && typeof numChars === 'number' && numChars >= 0) {
+    return input.length > numChars ? input.substring(numChars) : '';
+  } else {
+    console.error("Invalid input provided.");
+    return input; // Return original input if trimming is not possible
+  }
+}
+
+
+// Function to trim specified number of characters from the right side of a string
+function StringTrimRight(input, numChars) {
+  if (typeof input === 'string' && typeof numChars === 'number' && numChars >= 0) {
+    return input.length > numChars ? input.substring(0, input.length - numChars) : '';
+  } else {
+    console.error("Invalid input provided.");
+    return input; // Return original input if trimming is not possible
+  }
+}
+
+
+      function GuiControl(action, id, param1, param2, param3, param4) {
+        const element = document.getElementById(id);
+        if (element) {
+          // Handle DOM elements
+          if (action === "move") {
+            // Set position and size
+            element.style.left = param1 + "px";
+            element.style.top = param2 + "px";
+            element.style.width = param3 + "px";
+            element.style.height = param4 + "px";
+          } else if (action === "focus" && (element instanceof HTMLInputElement || element instanceof HTMLElement)) {
+            // Focus on the element
+            element.focus();
+          } else if (action === "text") {
+            // Set new text content
+            element.textContent = param1;
+          } else if (action === "hide") {
+            // Hide the element
+            element.style.display = "none";
+          } else if (action === "show") {
+            // Show the element
+            element.style.display = "";
+          } else if (action === "enable") {
+            // Enable the element
+            element.disabled = false;
+          } else if (action === "disable") {
+            // Disable the element
+            element.disabled = true;
+          } else if (action === "font") {
+            // Set font size
+            element.style.fontSize = param1 + "px";
+          } else if (action === "color") {
+            // Set color
+            element.style.color = param1;
+          } else if (action === "picture") {
+            // Change the image source
+            if (element instanceof HTMLImageElement) {
+              element.src = param1;
+            } else {
+              console.error("Element is not an <img> tag, cannot change picture.");
+            }
+          } else if (action === "textide") {
+            // Set value for Ace editor
+            var editor = ace.edit(id); // Access the Ace editor instance using its ID
+            if (editor && param1) {
+              editor.session.setValue(param1);
+            } else {
+              console.error("Element is not an Ace editor or parameter is missing.");
+            }
+          }
+        } else {
+          // Handle canvas or non-existing element
+          if (action === "move") {
+            // Update position and size of the rectangle
+            updateRectangle(id, param1, param2, param3, param4);
+            redrawCanvas(); // Redraw the canvas with updated rectangles
+          } else if (action === "color") {
+            // Update color of the rectangle
+            updateRectangleColor(id, param1);
+            redrawCanvas(); // Redraw the canvas with updated rectangles
+          }
+        }
+      }
+
+
+function LoopParseFunc(varString, delimiter1="", delimiter2="") {
+    let items;
+    if (!delimiter1 && !delimiter2) {
+        // If no delimiters are provided, return an array of characters
+        items = [...varString];
+    } else {
+        // Construct the regular expression pattern for splitting the string
+        let pattern = new RegExp('[' + delimiter1.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + delimiter2.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ']+');
+        // Split the string using the constructed pattern
+        items = varString.split(pattern);
+    }
+    return items;
+}
+
+
+
+// Define the str function
+function str(value) {
+    return String(value);
+}
+
+
+      // Single async function to structure the entire script
+      async function runScript() {
+        // Declare and assign a variable
+
+        
+
+let funcs = {
+  hideButton: hideButton,
+  showButton: showButton,
+}
+
+
+
+
+var Gui1 = {};
+Gui1 = document.createElement("div");
+
+
+
+
+
+// Declare and assign a variable
+let variables = {};
+document.title = "Destroy 1 Show 2"
+Gui1.style.position = "absolute";
+Gui1.style.width = window.innerWidth + "px"; // Set the width
+Gui1.style.height = "" + BuildInVars("A_ScreenHeight") + "px"; // Set the height
+Gui1.style.background = "linear-gradient(90deg, " + "#121212" + " 0%, " + "#121212" + " 100%)";
+Gui1.style.backgroundColor = "linear-gradient(90deg, " + "#121212" + " 0%, " + "#121212" + " 100%)";
+Gui1.style.color = "white";
+Gui1.style.fontSize = "15px";
+Gui1.style.padding = "0px";
+Gui1.style.borderRadius = "0px";
+Gui1.style.fontFamily = ", sans-serif"; // Specify your desired font here
+Gui1.style.zIndex = "100";
+document.body.appendChild(Gui1); // Append the GUI window to the body
+Gui1.style.display = "block";
+document.documentElement.setAttribute("style", "padding: 0; margin: 0;");
+document.head.setAttribute("style", "padding: 0; margin: 0;");
+document.body.setAttribute("style", "overflow-x: hidden;padding: 0; margin: 0;");
+// Define button dimensions
+variables.buttonW = 100
+variables.buttonH = 40
+variables.haveWeWon = 0
+// Get screen dimensions
+variables.ScreenWidth = BuildInVars("A_ScreenWidth")
+variables.ScreenHeight = BuildInVars("A_ScreenHeight")
+// Initialize starting points
+variables.pointX = 0
+variables.pointY = 0
+// Calculate total number of columns and rows
+variables.totalCols = await Floor (variables.ScreenWidth / variables.buttonW )
+variables.totalRows = await Floor (variables.ScreenHeight / variables.buttonH )
+// Calculate the middle column and row
+variables.middleCol = await Floor (variables.totalCols / 2 )
+variables.middleRow = await Floor (variables.totalRows / 2 )
+// Calculate the middle button's position
+variables.middleX = variables.middleCol * variables.buttonW
+variables.middleY = variables.middleRow * variables.buttonH
+// Display the middle button's position
+//MsgBox, Middle button position: X: %middleX% Y: %middleY%
+variables.ButtonPosNum = 0
+variables.allPos = ""
+variables.allPosHidden = ""
+// Loop through the grid positions
+for (/* Normal Loop */ variables.A_Index1 = 1; ; variables.A_Index1++)
+{
+// Loop for X positions
+for (/* Normal Loop */ variables.A_Index2 = 1; ; variables.A_Index2++)
+{
+// Print the current position
+//MsgBox, % "Button position: X: " . pointX . "Y: " . pointY
+variables.ButtonPosNum += 1
+variables.v = "pos" + variables.ButtonPosNum
+if (( variables.middleX == variables.pointX) && (variables.middleY == variables.pointY ))
+{
+// this is the middle one
+variables.middlePos = variables.ButtonPosNum
+Gui1[variables.v] = document.createElement("button");
+Gui1[variables.v].id = "Gui1" + "" + [variables.v] + ""; // Set ID for referencing
+Gui1[variables.v].textContent = "clcik me";
+Gui1[variables.v].style.fontSize = "15px"; // Set font size
+Gui1[variables.v].style.position = "absolute"; // Set position to absolute
+Gui1[variables.v].style.left = "" + variables.pointX + "px"; // Set initial x position
+Gui1[variables.v].style.top = "" + variables.pointY + "px"; // Set initial y position
+Gui1[variables.v].style.width = "" + variables.buttonW + "px"; // Set width
+Gui1[variables.v].style.height = "" + variables.buttonH + "px"; // Set height
+Gui1[variables.v].style.cursor = "pointer"; // Change cursor on hover
+Gui1[variables.v].style.border = "none";
+Gui1[variables.v].style.background = "";
+Gui1[variables.v].style.backgroundColor = "#F44336";
+Gui1[variables.v].style.borderRadius = "5px";
+Gui1[variables.v].style.color = "#FFFFFF";
+Gui1[variables.v].style.fontFamily = ", sans-serif"; // Specify your desired font here
+Gui1[variables.v].onclick = function (event) {
+A_GuiControl = event.target.id.replace(/^Gui\d*/, "");
+  Button(A_GuiControl);
+};
+Gui1.appendChild(Gui1[variables.v]);
+variables["pos" + variables.ButtonPosNum] = 1
+}
+else
+{
+Gui1[variables.v] = document.createElement("button");
+Gui1[variables.v].id = "Gui1" + "" + [variables.v] + ""; // Set ID for referencing
+Gui1[variables.v].textContent = "clcik me";
+Gui1[variables.v].style.fontSize = "15px"; // Set font size
+Gui1[variables.v].style.position = "absolute"; // Set position to absolute
+Gui1[variables.v].style.left = "" + variables.pointX + "px"; // Set initial x position
+Gui1[variables.v].style.top = "" + variables.pointY + "px"; // Set initial y position
+Gui1[variables.v].style.width = "" + variables.buttonW + "px"; // Set width
+Gui1[variables.v].style.height = "" + variables.buttonH + "px"; // Set height
+Gui1[variables.v].style.cursor = "pointer"; // Change cursor on hover
+Gui1[variables.v].style.border = "none";
+Gui1[variables.v].style.background = "";
+Gui1[variables.v].style.backgroundColor = "#F44336";
+Gui1[variables.v].style.borderRadius = "5px";
+Gui1[variables.v].style.color = "#FFFFFF";
+Gui1[variables.v].style.fontFamily = ", sans-serif"; // Specify your desired font here
+Gui1[variables.v].onclick = function (event) {
+A_GuiControl = event.target.id.replace(/^Gui\d*/, "");
+  Button(A_GuiControl);
+};
+Gui1.appendChild(Gui1[variables.v]);
+GuiControl("hide", "Gui1" + variables.v);
+variables["pos" + variables.ButtonPosNum] = 0
+}
+// Move to the next X position
+variables.pointX = variables.pointX + variables.buttonW
+// Check if we reached the screen width
+if (( variables.pointX + variables.buttonW > variables.ScreenWidth ))
+{
+break
+}
+}
+// Reset X position and move to the next Y position
+variables.pointX = 0
+variables.pointY = variables.pointY + variables.buttonH
+// Check if we reached the screen height
+if (( variables.pointY + variables.buttonH > variables.ScreenHeight ))
+{
+break
+}
+}
+variables.allPos = StringTrimRight(variables.allPos, 1)
+variables.allPosShown = variables.middlePos + "|"
+variables.allPosHidden = StringTrimRight(variables.allPosHidden, 1)
+variables.theShownButtons = variables.allPosShown + "|"
+return
+async function Button(A_GuiControl)
+{
+if (( variables.haveWeWon == 0 ))
+{
+//MsgBox, % A_GuiControl
+variables.posNum = StringTrimLeft(A_GuiControl, 3)
+variables.posNum = await ParseInt (variables.posNum )
+//MsgBox, % posNum
+variables.allPosAvalableNum = 0
+variables.allPosAvalable = ""
+for (/* Normal Loop */ variables.A_Index3 = 1; variables.A_Index3 <= variables.ButtonPosNum; variables.A_Index3++)
+{
+if (( variables["pos" + variables.A_Index3] == 0 ))
+{
+variables.allPosAvalable += variables.A_Index3 + "|"
+variables.allPosAvalableNum += 1
+}
+}
+variables.allPosAvalable = StringTrimRight(variables.allPosAvalable, 1)
+if (( variables.allPosAvalableNum == 1 ))
+{
+var items4 = LoopParseFunc(variables.allPosAvalable, "|");
+for (/* Loop Parse */ let A_Index4 = 1; A_Index4 <= items4.length; A_Index4++)
+{
+variables.A_Index4 = A_Index4
+variables.A_LoopField4 = items4[A_Index4 - 1];
+if (( variables.A_LoopField4  != "" ))
+{
+await showButton( await ParseInt (variables.A_LoopField4) )
+await showCustomMessageBox({}," ", "You Win", 0, 0)
+}
+}
+variables.haveWeWon = 1
+return
+}
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+// random numbers whit no repetition
+variables.N = 2
+variables.MIN = 1
+variables.MAX = variables.allPosAvalableNum
+for (/* Normal Loop */ variables.A_Index5 = 1; variables.A_Index5 <= variables.N; variables.A_Index5++)
+{
+variables.i = variables.A_Index5
+for (/* Normal Loop */ variables.A_Index6 = 1; ; variables.A_Index6++)
+{
+variables.R = getRandomNumber(variables.MIN, variables.MAX)
+variables.j = variables["Index_" + variables.R]
+if (( variables.j >= 1) && (variables.j <= variables.i - 1 ))
+{
+if (( variables["R_" + variables.j] == variables.R ))
+{
+continue
+}
+}
+variables["Index_" + variables.R] = variables.i
+variables["R_" + variables.i] = variables.R
+break
+}
+}
+variables.nnn = 1
+variables.outTestRanNums = ""
+for (/* Normal Loop */ variables.A_Index7 = 1; variables.A_Index7 <= variables.N; variables.A_Index7++)
+{
+// add name here
+variables["hello" + variables.nnn] = variables["R_" + variables.nnn]
+variables.outTestRanNums += variables["R_" + variables.nnn] + " "
+variables.nnn += 1
+}
+variables.outTestRanNums = StringTrimRight(variables.outTestRanNums, 1)
+//MsgBox, %outTestRanNums%
+var items8 = LoopParseFunc(variables.outTestRanNums, " ");
+for (/* Loop Parse */ let A_Index8 = 1; A_Index8 <= items8.length; A_Index8++)
+{
+variables.A_Index8 = A_Index8
+variables.A_LoopField8 = items8[A_Index8 - 1];
+if (( variables.A_Index8 == 1 ))
+{
+variables.ran1 = await ParseInt (variables.A_LoopField8 )
+}
+if (( variables.A_Index8 == 2 ))
+{
+variables.ran2 = await ParseInt (variables.A_LoopField8 )
+}
+}
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+var items9 = LoopParseFunc(variables.allPosAvalable, "|");
+for (/* Loop Parse */ let A_Index9 = 1; A_Index9 <= items9.length; A_Index9++)
+{
+variables.A_Index9 = A_Index9
+variables.A_LoopField9 = items9[A_Index9 - 1];
+if (( variables.A_LoopField9  != "" ))
+{
+if (( variables.A_Index9 == variables.ran1 ))
+{
+variables.ranRan1 = await ParseInt (variables.A_LoopField9 )
+}
+if (( variables.A_Index9 == variables.ran2 ))
+{
+variables.ranRan2 = await ParseInt (variables.A_LoopField9 )
+}
+}
+}
+//MsgBox, % ranRan1
+//MsgBox, % ranRan2
+await hideButton( variables.posNum )
+await showButton( variables.ranRan1 )
+await showButton( variables.ranRan2 )
+}
+return
+}
+async function hideButton(pos)
+{
+variables.pos = pos
+variables.v = "pos" + variables.pos
+variables["pos" + variables.pos] = 0
+GuiControl("hide", "Gui1" + variables.v);
+return
+}
+async function showButton(pos)
+{
+variables.pos = pos
+variables.v = "pos" + variables.pos
+variables["pos" + variables.pos] = 1
+GuiControl("show", "Gui1" + variables.v);
+return
+}
+
+
+ }
+
+      // Call the async function to start the script
+      runScript();
+    </script>
+  </body>
+</html>

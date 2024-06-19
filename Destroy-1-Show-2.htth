@@ -1,0 +1,237 @@
+Title, Destroy 1 Show 2
+Gui, Show, +websitemode w%A_ScreenWidth% h%A_ScreenHeight%
+; Define button dimensions
+buttonW := 100
+buttonH := 40
+
+haveWeWon := 0
+
+; Get screen dimensions
+ScreenWidth := A_ScreenWidth
+ScreenHeight := A_ScreenHeight
+
+; Initialize starting points
+pointX := 0
+pointY := 0
+
+; Calculate total number of columns and rows
+totalCols := Floor(ScreenWidth / buttonW)
+totalRows := Floor(ScreenHeight / buttonH)
+
+; Calculate the middle column and row
+middleCol := Floor(totalCols / 2)
+middleRow := Floor(totalRows / 2)
+
+; Calculate the middle button's position
+middleX := middleCol * buttonW
+middleY := middleRow * buttonH
+
+; Display the middle button's position
+;MsgBox, Middle button position: X: %middleX% Y: %middleY%
+
+
+ButtonPosNum := 0
+allPos := ""
+allPosHidden := ""
+; Loop through the grid positions
+Loop
+{
+; Loop for X positions
+Loop
+{
+; Print the current position
+;MsgBox, % "Button position: X: " . pointX . "Y: " . pointY
+ButtonPosNum++
+v := "pos" . ButtonPosNum
+if (middleX = pointX) && (middleY = pointY)
+{
+; this is the middle one
+middlePos := ButtonPosNum
+Gui, Add, Button, x%pointX% y%pointY% w%buttonW% h%buttonH% v%v% -Border r5 bgF44336 cFFFFFF gButton, clcik me
+pos%ButtonPosNum% := 1
+}
+else
+{
+Gui, Add, Button, x%pointX% y%pointY% w%buttonW% h%buttonH% v%v% -Border r5 bgF44336 cFFFFFF gButton, clcik me
+GuiControl, Hide, %v%
+pos%ButtonPosNum% := 0
+}
+; Move to the next X position
+pointX := pointX + buttonW
+
+; Check if we reached the screen width
+if (pointX + buttonW > ScreenWidth)
+{
+break
+}
+}
+
+; Reset X position and move to the next Y position
+pointX := 0
+pointY := pointY + buttonH
+
+; Check if we reached the screen height
+if (pointY + buttonH > ScreenHeight)
+{
+break
+}
+}
+StringTrimRight, allPos, allPos, 1
+allPosShown := middlePos . "|"
+StringTrimRight, allPosHidden, allPosHidden, 1
+theShownButtons := allPosShown . "|"
+return
+
+
+Button:
+if (haveWeWon = 0)
+{
+;MsgBox, % A_GuiControl
+StringTrimLeft, posNum, A_GuiControl, 3
+posNum := ParseInt(posNum)
+;MsgBox, % posNum
+
+
+allPosAvalableNum := 0
+allPosAvalable := ""
+Loop, % ButtonPosNum
+{
+if (pos%A_Index% = 0)
+{
+allPosAvalable .= A_Index . "|"
+allPosAvalableNum++
+}
+}
+StringTrimRight, allPosAvalable, allPosAvalable, 1
+if (allPosAvalableNum = 1)
+{
+Loop, Parse, allPosAvalable, "|"
+{
+if (A_LoopField != "")
+{
+showButton(ParseInt(A_LoopField))
+MsgBox, You Win
+}
+}
+
+haveWeWon := 1
+return
+}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; random numbers whit no repetition
+N := 2
+MIN := 1
+MAX := allPosAvalableNum
+
+
+Loop, % N
+{
+i := A_Index
+loop
+{
+Random, R, %MIN%, %MAX%
+j := Index_%R%
+
+if (j >= 1) && (j <= i - 1)
+{
+if (R_%j% = R)
+{
+continue
+}
+}
+
+Index_%R% := i
+R_%i% := R
+break
+}
+}
+
+nnn := 1
+outTestRanNums := ""
+Loop, % N
+{
+	; add name here
+    hello%nnn% := R_%nnn%
+	outTestRanNums .= R_%nnn% . " "
+    nnn++
+}
+StringTrimRight, outTestRanNums, outTestRanNums, 1
+;MsgBox, %outTestRanNums%
+Loop, Parse, outTestRanNums, " "
+{
+if (A_Index = 1)
+{
+ran1 := ParseInt(A_LoopField)
+}
+if (A_Index = 2)
+{
+ran2 := ParseInt(A_LoopField)
+}
+
+}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+Loop, Parse, allPosAvalable, "|"
+{
+if (A_LoopField != "")
+{
+if (A_Index = ran1)
+{
+ranRan1 := ParseInt(A_LoopField)
+}
+if (A_Index = ran2)
+{
+ranRan2 := ParseInt(A_LoopField)
+}
+}
+}
+
+;MsgBox, % ranRan1
+;MsgBox, % ranRan2
+hideButton(posNum)
+showButton(ranRan1)
+showButton(ranRan2)
+
+}
+return
+Return
+
+
+hideButton(pos)
+{
+v := "pos" . pos
+pos%pos% := 0
+GuiControl, Hide, %v%
+return
+}
+showButton(pos)
+{
+v := "pos" . pos
+pos%pos% := 1
+GuiControl, Show, %v%
+return
+}
+
+
+
+
+
+
+

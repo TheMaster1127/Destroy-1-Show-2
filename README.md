@@ -12,6 +12,7 @@ The objective of the game is to click on the buttons that appear on the screen. 
 - Random button positioning without overlapping
 - Custom algorithm for generating unique random positions
 - Win condition detection and message box display
+- Times the user and shows the best time
 - Responsive design for various screen sizes
 
 ## Technologies Used

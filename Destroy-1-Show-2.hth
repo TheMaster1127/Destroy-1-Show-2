@@ -4,7 +4,15 @@ Gui, Show, +websitemode w%A_ScreenWidth% h%A_ScreenHeight%
 buttonW := 100
 buttonH := 40
 
+; Check if the local storage is empty
+if (StoreLocally("e"))
+{
+StoreLocally("s", "destroy1show2besttime", "null")
+StoreLocally("s", "destroy1show2besttimems", "null")
+}
+
 haveWeWon := 0
+onceStart := 0
 
 ; Get screen dimensions
 ScreenWidth := A_ScreenWidth
@@ -84,6 +92,11 @@ return
 
 
 Button:
+onceStart++
+if (onceStart = 1)
+{
+StartTime := A_TickCount
+}
 if (haveWeWon = 0)
 {
 ;MsgBox, % A_GuiControl
@@ -110,7 +123,89 @@ Loop, Parse, allPosAvalable, "|"
 if (A_LoopField != "")
 {
 showButton(ParseInt(A_LoopField))
-MsgBox, You Win
+
+ElapsedTime := A_TickCount - StartTime
+
+
+ms := ElapsedTime
+
+; Calculate the components
+hours := Floor(ms / 3600000)
+ms := Mod(ms, 3600000)
+minutes := Floor(ms / 60000)
+ms := Mod(ms, 60000)
+seconds := Floor(ms / 1000)
+milliseconds := Mod(ms, 1000)
+
+text1 := ""
+text2 := ""
+text3 := ""
+
+; Display the result
+ElapsedTime123 := ""
+ElapsedTime123 .= minutes . "m " . seconds . "s " . milliseconds . "ms"
+Gui 2: Show, w300 h200
+textText := "You Win in: " . ElapsedTime123
+text1 := textText
+newBestTime := ""
+dataBestTime := StoreLocally("r", "destroy1show2besttime")
+dataBestTimeMs := StoreLocally("r", "destroy1show2besttimems")
+if (dataBestTimeMs != "null")
+{
+dataBestTimeMs := ParseInt(dataBestTimeMs)
+}
+else
+{
+dataBestTimeMs := 0
+}
+
+if (dataBestTime = "null")
+{
+
+if (dataBestTimeMs < ElapsedTime)
+{
+bestTimeText := "Your best time is: " . ElapsedTime123
+text3 := "Congratulations!!!"
+StoreLocally("s", "destroy1show2besttimems", ElapsedTime)
+bestTimeText := bestTimeText
+StoreLocally("s", "destroy1show2besttime", bestTimeText)
+bestTimeText := "Your new best time is: " . ElapsedTime123
+}
+else
+{
+bestTimeText := dataBestTime
+}
+
+}
+else
+{
+
+if (dataBestTimeMs > ElapsedTime)
+{
+bestTimeText := "Your best time is: " . ElapsedTime123
+text3 := "Congratulations!!!"
+StoreLocally("s", "destroy1show2besttimems", ElapsedTime)
+bestTimeText := bestTimeText
+StoreLocally("s", "destroy1show2besttime", bestTimeText)
+bestTimeText := "Your new best time is: " . ElapsedTime123
+}
+else
+{
+bestTimeText := dataBestTime
+}
+}
+
+
+
+text2 := bestTimeText
+Gui 2: Font, s23
+Gui 2: Add, Text, x10 y10 w280 h45, %text1%
+Gui 2: Font, s16
+Gui 2: Add, Text, x10 y60 w280 h45, %text2%
+Gui 2: Font, s26
+Gui 2: Add, Text, x43 y102 w280 h45, %text3%
+Gui 2: Font, s15
+Gui 2: Add, Button, x80 y160 h30 w140 gReload, Restart
 }
 }
 
@@ -231,6 +326,9 @@ return
 
 
 
+Reload:
+Reload
+Return
 
 
 

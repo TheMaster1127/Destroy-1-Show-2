@@ -22,7 +22,7 @@
           sans-serif;
       }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 
     
 
@@ -67,182 +67,6 @@
       changeFaviconAtTheBeginning("https://i.ibb.co/Jpty1B8/305182938-1a0efe63-726e-49ca-a13c-d0ed627f2ea7.png");
 
       
-      function showCustomMessageBox(options, title, text, value, timeout) {
-        return new Promise((resolve) => {
-          // Define default options for the message box
-          let defaultOptions = {
-            title: title || "", // Default title is empty
-            text: text || "Press OK to continue.", // Default text if not provided
-            showCancelButton: false, // Default is to not show Cancel button
-            showDenyButton: false, // Default is to not show Deny button
-            confirmButtonText: "OK", // Default text for OK button
-            focusConfirm: true, // Default focus on OK button
-          };
-
-          let numOriginal = value;
-
-          let num = numOriginal;
-
-          let done1 = 0;
-
-          let done2 = 0;
-
-          let done3 = 0;
-
-          let AIndex = 0;
-
-          for (AIndex = 1; AIndex <= 1; AIndex++) {
-            // this is about if you add always on top in a msgbox it will be removed in js cuz its kinda useless...
-            // becouse if you like adding always on top in ahk in js we dont realy do it so yeah
-            if (num >= 262144) {
-              num = num - 262144;
-              numOriginal = numOriginal - 262144;
-            }
-
-            if (num >= 256 && num < 500) {
-              num = num - 256;
-
-              done3 = 256;
-            }
-
-            if (num >= 512) {
-              num = num - 512;
-
-              done3 = 512;
-            }
-
-            if (num == 0) {
-              done1 = 0;
-
-              break;
-            }
-
-            if (num <= 6) {
-              done1 = num;
-
-              break;
-            }
-
-            if (num >= 64 && num < 64 * 2) {
-              done2 = 64;
-
-              if (num == 64) {
-                done1 = 0;
-
-                break;
-              } else {
-                done1 = num - 64;
-
-                break;
-              }
-            }
-
-            if (num >= 48 && num < 63) {
-              done2 = 48;
-
-              if (num == 48) {
-                done1 = 0;
-
-                break;
-              } else {
-                done1 = num - 48;
-
-                break;
-              }
-            }
-
-            if (num >= 32 && num < 47) {
-              done2 = 32;
-
-              if (num == 32) {
-                done1 = 0;
-
-                break;
-              } else {
-                done1 = num - 32;
-
-                break;
-              }
-            }
-
-            if (num >= 16 && num < 30) {
-              done2 = 16;
-
-              if (num == 16) {
-                done1 = 0;
-
-                break;
-              } else {
-                done1 = num - 16;
-
-                break;
-              }
-            }
-          }
-
-          let doneAdded = done1 + done2 + done3;
-
-          if (doneAdded !== numOriginal) {
-            // displayMessage("The calc was wrong!");
-          } else {
-            // displayMessage("num was: " + numOriginal + "\ndone1: " + done1 + "\ndone2: " + done2 + "\ndone3: " + done3);
-          }
-
-          // Parse the value to determine the options for the message box
-          if (done1 === 1) defaultOptions.showCancelButton = true; // OK/Cancel in ahk but here it will show Ok/Cancel wiat its same haha
-
-          // not gonna work if you can make it work i will appreciate
-          //   if (done1 === 2) {
-          //     defaultOptions.showCancelButton = true; // Abort/Retry/Ignore
-          //     defaultOptions.showDenyButton = true;
-          //   }
-          if (done1 === 3) {
-            defaultOptions.showCancelButton = true; // Yes/No/Cancel in ahk but here it will show Ok/No/Cancel
-            defaultOptions.showDenyButton = true;
-          }
-          if (done1 === 4) {
-            // defaultOptions.showCancelButton = true;
-            defaultOptions.showDenyButton = true; // Yes/No in ahk but here it will show Ok/No
-          }
-          if (done1 === 5) {
-            defaultOptions.showCancelButton = true; // Retry/Cancel in ahk but here it will show Ok/Cancel tip you can write in the Msgbox press ok to retry
-          }
-          // not gonna work if you can make it work i will appreciate
-          //   if (done1 === 6) {
-          //     defaultOptions.showCancelButton = true; // Cancel/Try Again/Continue
-          //     defaultOptions.showDenyButton = true;
-          //   }
-
-          if (done2 === 16) defaultOptions.icon = "error"; // Icon Hand (stop/error)
-          if (done2 === 32) defaultOptions.icon = "question"; // Icon Question
-          if (done2 === 48) defaultOptions.icon = "warning"; // Icon Exclamation
-          if (done2 === 64) defaultOptions.icon = "info"; // Icon Asterisk (info)
-
-          if (done3 === 256) defaultOptions.focusDeny = true; // Makes the 3rd button the default
-          if (done3 === 512) defaultOptions.focusCancel = true; // Makes the 2nd button the default
-
-          // Set timeout if provided
-          if (timeout) {
-            defaultOptions.timer = timeout * 1000; // Convert timeout to milliseconds
-          }
-
-          // Merge default options with provided options
-          Object.assign(defaultOptions, options);
-
-          // Display the message box with the constructed options
-          Swal.fire(defaultOptions).then((result) => {
-            if (result.isConfirmed) {
-              resolve("OK");
-            } else if (result.isDenied) {
-              resolve("No");
-            } else {
-              resolve("Cancel");
-            }
-          });
-        });
-      }
-
-
       var lastKeyPressed = "";
 
       function trackLastKeyPressed() {
@@ -369,6 +193,12 @@
         return num;
       }
 
+      // Custom Mod function
+      function Mod(dividend, divisor) {
+        return dividend % divisor;
+      }
+
+
 // Function to trim specified number of characters from the left side of a string
 function StringTrimLeft(input, numChars) {
   if (typeof input === 'string' && typeof numChars === 'number' && numChars >= 0) {
@@ -456,6 +286,32 @@ function StringTrimRight(input, numChars) {
       }
 
 
+      function StoreLocally(operation, saveLocation, data) {
+        if (operation === "s") {
+          // Save data to local storage under specified saveLocation
+          localStorage.setItem(saveLocation, String(data));
+          return true; // Indicate success
+        } else if (operation === "d") {
+          // Delete data from local storage under specified saveLocation
+          localStorage.removeItem(saveLocation);
+          return true; // Indicate success
+        } else if (operation === "r") {
+          // Retrieve data from local storage under specified saveLocation
+          return localStorage.getItem(saveLocation) || null; // Return stored data or null if not found
+        } else if (operation === "dALL") {
+          // Delete all data from local storage (clear all keys)
+          localStorage.clear();
+          return true; // Indicate success
+        } else if (operation === "e") {
+          // Check if local storage is empty (no keys present)
+          return localStorage.length === 0; // Return true if empty, false if not empty
+        } else {
+          console.error("Invalid operation specified.");
+          return false; // Indicate failure
+        }
+      }
+
+
 function LoopParseFunc(varString, delimiter1="", delimiter2="") {
     let items;
     if (!delimiter1 && !delimiter2) {
@@ -495,6 +351,9 @@ let funcs = {
 var Gui1 = {};
 Gui1 = document.createElement("div");
 
+var Gui2 = {};
+Gui2 = document.createElement("div");
+
 
 
 
@@ -521,7 +380,14 @@ document.body.setAttribute("style", "overflow-x: hidden;padding: 0; margin: 0;")
 // Define button dimensions
 variables.buttonW = 100
 variables.buttonH = 40
+// Check if the local storage is empty
+if (( await StoreLocally ("e") ))
+{
+await StoreLocally( "s" , "destroy1show2besttime" , "null" )
+await StoreLocally( "s" , "destroy1show2besttimems" , "null" )
+}
 variables.haveWeWon = 0
+variables.onceStart = 0
 // Get screen dimensions
 variables.ScreenWidth = BuildInVars("A_ScreenWidth")
 variables.ScreenHeight = BuildInVars("A_ScreenHeight")
@@ -629,6 +495,11 @@ variables.theShownButtons = variables.allPosShown + "|"
 return
 async function Button(A_GuiControl)
 {
+variables.onceStart += 1
+if (( variables.onceStart == 1 ))
+{
+variables.StartTime = BuildInVars("A_TickCount")
+}
 if (( variables.haveWeWon == 0 ))
 {
 //MsgBox, % A_GuiControl
@@ -656,7 +527,138 @@ variables.A_LoopField4 = items4[A_Index4 - 1];
 if (( variables.A_LoopField4  != "" ))
 {
 await showButton( await ParseInt (variables.A_LoopField4) )
-await showCustomMessageBox({}," ", "You Win", 0, 0)
+variables.ElapsedTime = BuildInVars("A_TickCount") - variables.StartTime
+variables.ms = variables.ElapsedTime
+// Calculate the components
+variables.hours = await Floor (variables.ms / 3600000 )
+variables.ms = await Mod (variables.ms , 3600000 )
+variables.minutes = await Floor (variables.ms / 60000 )
+variables.ms = await Mod (variables.ms , 60000 )
+variables.seconds = await Floor (variables.ms / 1000 )
+variables.milliseconds = await Mod (variables.ms , 1000 )
+variables.text1 = ""
+variables.text2 = ""
+variables.text3 = ""
+// Display the result
+variables.ElapsedTime123 = ""
+variables.ElapsedTime123 += variables.minutes + "m " + variables.seconds + "s " + variables.milliseconds + "ms"
+Gui2.style.position = "absolute";
+Gui2.style.width = "300px"; // Set the width
+Gui2.style.height = "200px"; // Set the height
+Gui2.style.background = "linear-gradient(90deg, " + "#121212" + " 0%, " + "#121212" + " 100%)";
+Gui2.style.backgroundColor = "linear-gradient(90deg, " + "#121212" + " 0%, " + "#121212" + " 100%)";
+Gui2.style.color = "white";
+Gui2.style.fontSize = "15px";
+Gui2.style.borderRadius = "0px";
+Gui2.style.padding = "0px";
+Gui2.style.border = "2px solid white";
+Gui2.style.fontFamily = ", sans-serif"; // Specify your desired font here
+Gui2.style.zIndex = "200";
+// Calculate center position
+Gui2.style.left = (window.innerWidth - parseInt(Gui2.style.width)) / 2 + "px";
+Gui2.style.top = (window.innerHeight - parseInt(Gui2.style.height)) / 2 + "px";
+document.body.appendChild(Gui2); // Append the GUI window to the body
+Gui2.style.display = "block";
+variables.textText = "You Win in: " + variables.ElapsedTime123
+variables.text1 = variables.textText
+variables.newBestTime = ""
+variables.dataBestTime = await StoreLocally ("r" , "destroy1show2besttime" )
+variables.dataBestTimeMs = await StoreLocally ("r" , "destroy1show2besttimems" )
+if (( variables.dataBestTimeMs  != "null" ))
+{
+variables.dataBestTimeMs = await ParseInt (variables.dataBestTimeMs )
+}
+else
+{
+variables.dataBestTimeMs = 0
+}
+if (( variables.dataBestTime == "null" ))
+{
+if (( variables.dataBestTimeMs < variables.ElapsedTime ))
+{
+variables.bestTimeText = "Your best time is: " + variables.ElapsedTime123
+variables.text3 = "Congratulations!!!"
+await StoreLocally( "s" , "destroy1show2besttimems" , variables.ElapsedTime )
+variables.bestTimeText = variables.bestTimeText
+await StoreLocally( "s" , "destroy1show2besttime" , variables.bestTimeText )
+variables.bestTimeText = "Your new best time is: " + variables.ElapsedTime123
+}
+else
+{
+variables.bestTimeText = variables.dataBestTime
+}
+}
+else
+{
+if (( variables.dataBestTimeMs > variables.ElapsedTime ))
+{
+variables.bestTimeText = "Your best time is: " + variables.ElapsedTime123
+variables.text3 = "Congratulations!!!"
+await StoreLocally( "s" , "destroy1show2besttimems" , variables.ElapsedTime )
+variables.bestTimeText = variables.bestTimeText
+await StoreLocally( "s" , "destroy1show2besttime" , variables.bestTimeText )
+variables.bestTimeText = "Your new best time is: " + variables.ElapsedTime123
+}
+else
+{
+variables.bestTimeText = variables.dataBestTime
+}
+}
+variables.text2 = variables.bestTimeText
+Gui2Static1 = document.createElement("div");
+Gui2Static1.id = "Gui2" + "Static" + "1"; // Set ID for referencing
+Gui2Static1.textContent = "" + variables.text1 + "";
+Gui2Static1.style.color = "#black"
+Gui2Static1.style.fontSize = "23px"; // Set font size
+Gui2Static1.style.position = "absolute"; // Set position to absolute
+Gui2Static1.style.left = "10px"; // Set initial x position
+Gui2Static1.style.top = "10px"; // Set initial y position
+Gui2Static1.style.width = "280px"; // Set width
+Gui2Static1.style.height = "45px"; // Set height
+Gui2.appendChild(Gui2Static1);
+Gui2Static2 = document.createElement("div");
+Gui2Static2.id = "Gui2" + "Static" + "2"; // Set ID for referencing
+Gui2Static2.textContent = "" + variables.text2 + "";
+Gui2Static2.style.color = "#black"
+Gui2Static2.style.fontSize = "16px"; // Set font size
+Gui2Static2.style.position = "absolute"; // Set position to absolute
+Gui2Static2.style.left = "10px"; // Set initial x position
+Gui2Static2.style.top = "60px"; // Set initial y position
+Gui2Static2.style.width = "280px"; // Set width
+Gui2Static2.style.height = "45px"; // Set height
+Gui2.appendChild(Gui2Static2);
+Gui2Static3 = document.createElement("div");
+Gui2Static3.id = "Gui2" + "Static" + "3"; // Set ID for referencing
+Gui2Static3.textContent = "" + variables.text3 + "";
+Gui2Static3.style.color = "#black"
+Gui2Static3.style.fontSize = "26px"; // Set font size
+Gui2Static3.style.position = "absolute"; // Set position to absolute
+Gui2Static3.style.left = "43px"; // Set initial x position
+Gui2Static3.style.top = "102px"; // Set initial y position
+Gui2Static3.style.width = "280px"; // Set width
+Gui2Static3.style.height = "45px"; // Set height
+Gui2.appendChild(Gui2Static3);
+Gui2Button1 = document.createElement("button");
+Gui2Button1.id = "Gui2" + "Button" + "1"; // Set ID for referencing
+Gui2Button1.textContent = "Restart";
+Gui2Button1.style.fontSize = "15px"; // Set font size
+Gui2Button1.style.position = "absolute"; // Set position to absolute
+Gui2Button1.style.left = "80px"; // Set initial x position
+Gui2Button1.style.top = "160px"; // Set initial y position
+Gui2Button1.style.width = "140px"; // Set width
+Gui2Button1.style.height = "30px"; // Set height
+Gui2Button1.style.cursor = "pointer"; // Change cursor on hover
+Gui2Button1.style.border = "";
+Gui2Button1.style.background = "";
+Gui2Button1.style.backgroundColor = "";
+Gui2Button1.style.borderRadius = "";
+Gui2Button1.style.color = "";
+Gui2Button1.style.fontFamily = ", sans-serif"; // Specify your desired font here
+Gui2Button1.onclick = function (event) {
+A_GuiControl = event.target.textContent
+  Reload(A_GuiControl);
+};
+Gui2.appendChild(Gui2Button1);
 }
 }
 variables.haveWeWon = 1
@@ -768,6 +770,10 @@ variables.v = "pos" + variables.pos
 variables["pos" + variables.pos] = 1
 GuiControl("show", "Gui1" + variables.v);
 return
+}
+async function Reload(A_GuiControl)
+{
+location.reload()
 }
 
 
